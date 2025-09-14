@@ -5,6 +5,8 @@ import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
 import SearchBar from './components/SearchBar';
 import Filters from './components/Filters';
+import FavoritesList from './components/FavoritesList';
+import RecommendationsList from './components/RecommendationsList';
 
 const Home = () => (
   <>
@@ -12,6 +14,8 @@ const Home = () => (
     <Filters />
     <AddRecipeForm />
     <RecipeList />
+    <FavoritesList />
+    <RecommendationsList />
   </>
 );
 
