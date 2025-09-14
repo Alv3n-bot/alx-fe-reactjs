@@ -3,9 +3,13 @@ import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
 import EditRecipeForm from './components/EditRecipeForm';
+import SearchBar from './components/SearchBar';
+import Filters from './components/Filters';
 
 const Home = () => (
   <>
+    <SearchBar />
+    <Filters />
     <AddRecipeForm />
     <RecipeList />
   </>

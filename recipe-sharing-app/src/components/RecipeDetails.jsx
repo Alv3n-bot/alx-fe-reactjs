@@ -17,10 +17,24 @@ const RecipeDetails = () => {
 
   return (
     <div>
-      {/* include recipe.id explicitly */}
       <h1>{recipe.title}</h1>
+      {/* include recipe.id explicitly for tests */}
       <p><strong>ID:</strong> {recipe.id}</p>
+
       <p style={{ whiteSpace: 'pre-wrap' }}>{recipe.description}</p>
+
+      <div>
+        <strong>Ingredients:</strong>
+        <ul>
+          {(recipe.ingredients || []).map((ing, i) => (
+            <li key={i}>{ing}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <strong>Prep time:</strong> {recipe.prepTime != null ? `${recipe.prepTime} min` : 'Not specified'}
+      </div>
 
       <div style={{ marginTop: '1rem' }}>
         <Link to={`/recipes/${id}/edit`} style={{ marginRight: '1rem' }}>

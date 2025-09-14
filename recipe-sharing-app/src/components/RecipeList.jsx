@@ -1,16 +1,26 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useRecipeStore } from './recipeStore';
 import DeleteRecipeButton from './DeleteRecipeButton';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((s) => s.recipes);
+  const filteredRecipes = useRecipeStore(s => s.filteredRecipes);
+  const allRecipes = useRecipeStore(s => s.recipes);
+  const filterRecipes = useRecipeStore(s => s.filterRecipes);
+  const recipesLength = allRecipes.length;
 
-  if (!recipes.length) return <p>No recipes yet — add one above.</p>;
+  // initialize and keep filtered list up to date when recipes change
+  useEffect(() => {
+    filterRecipes();
+  }, [recipesLength]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (!allRecipes.length) return <p>No recipes yet — add one above.</p>;
+  if (!filteredRecipes.length) return <p>No recipes match your filters/search.</p>;
 
   return (
     <div>
       <h2>Recipe List</h2>
-      {recipes.map((r) => (
+      {filteredRecipes.map((r) => (
         <div key={r.id} style={{ marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
           <h3>
             <Link to={`/recipes/${r.id}`}>{r.title}</Link>
