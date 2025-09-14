@@ -17,7 +17,9 @@ const RecipeDetails = () => {
 
   return (
     <div>
+      {/* include recipe.id explicitly */}
       <h1>{recipe.title}</h1>
+      <p><strong>ID:</strong> {recipe.id}</p>
       <p style={{ whiteSpace: 'pre-wrap' }}>{recipe.description}</p>
 
       <div style={{ marginTop: '1rem' }}>
