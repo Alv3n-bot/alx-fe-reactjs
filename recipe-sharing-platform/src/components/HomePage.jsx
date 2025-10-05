@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import data from "../data.json"; // static import of mock data
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
-  // load data on component mount
   useEffect(() => {
-    setRecipes(data);
+    fetch("/data.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((json) => {
+        console.log("Loaded recipes:", json);
+        setRecipes(json);
+      })
+      .catch((err) => console.error("Error loading data:", err));
   }, []);
 
   return (
@@ -15,30 +23,36 @@ const HomePage = () => {
         🍽️ Recipe Sharing Platform
       </h1>
 
-      {/* Grid layout for recipes */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-        {recipes.map((recipe) => (
-          <div
-            key={recipe.id}
-            className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl hover:scale-[1.02] transition-transform duration-200"
-          >
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
-                {recipe.title}
-              </h2>
-              <p className="text-gray-600 mb-4">{recipe.summary}</p>
-              <button className="text-blue-600 font-medium hover:underline">
-                View Recipe →
-              </button>
+      {recipes.length === 0 ? (
+        <p className="text-center text-gray-500">Loading recipes...</p>
+      ) : (
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          {recipes.map((recipe) => (
+            <div
+              key={recipe.id}
+              className="bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl hover:scale-[1.02] transition-transform duration-200"
+            >
+              <img
+                src={recipe.image}
+                alt={recipe.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                  {recipe.title}
+                </h2>
+                <p className="text-gray-600 mb-4">{recipe.summary}</p>
+                <Link
+                  to={`/recipe/${recipe.id}`}
+                  className="text-blue-600 font-medium hover:underline"
+                >
+                  View Recipe →
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
