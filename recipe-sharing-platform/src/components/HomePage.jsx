@@ -22,16 +22,18 @@ const HomePage = () => {
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
         🍽️ Recipe Sharing Platform
       </h1>
-<Link
-  to="/add-recipe"
-  className="inline-block bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition mb-6"
->
-  ➕ Add New Recipe
-</Link>
+
+      <Link
+        to="/add-recipe"
+        className="inline-block bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 transition mb-6"
+      >
+        ➕ Add New Recipe
+      </Link>
+
       {recipes.length === 0 ? (
         <p className="text-center text-gray-500">Loading recipes...</p>
       ) : (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {recipes.map((recipe) => (
             <div
               key={recipe.id}
